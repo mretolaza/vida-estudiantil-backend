@@ -1,0 +1,16 @@
+{
+  "name": "vidaestudiantilbackend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "asyncfulltable": "node asyncFullTable.js"
+  },
+  "author": "Ines",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.0.3"
+  },
+  "devDependencies": {},
+  "description": ""
+}
