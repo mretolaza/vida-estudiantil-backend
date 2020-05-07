@@ -5,27 +5,27 @@ require('dotenv').config({
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
 
+const KnexSessionStore = require('connect-session-knex')(session);
+const Knex = require('knex');
 const initAuthMiddleware = require('./features/login/init-auth-middleware');
 const indexRouter = require('./routes/index');
 
-const redisStoreConfig = {
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-};
-
-if (process.env.REDIS_URL) {
-  redisStoreConfig.url = process.env.REDIS_URL; // this will use the REDIS_URL required for logging into the Redis addon provided by Heroku
-}
-
-if (process.env.REDIS_PASSWORD) {
-  redisStoreConfig.password = process.env.REDIS_PASSWORD; // this will use the REDIS_PASSWORD if required
-}
-
-const redisStore = new RedisStore(redisStoreConfig);
-
 const app = express();
+
+const knex = Knex({
+  client: 'pg',
+  connection: {
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+  },
+});
+
+const knexStore = new KnexSessionStore({
+  knex,
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,7 +36,7 @@ app.enable('trust proxy');
 const { COOKIE_EXPIRATION_MS } = process.env;
 app.use(
   session({
-    store: redisStore,
+    store: knexStore,
     secret: 'keyboard cat',
     name: process.env.SESSION_COOKIE_NAME,
     resave: false,
