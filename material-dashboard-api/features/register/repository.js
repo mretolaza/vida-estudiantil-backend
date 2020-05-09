@@ -13,6 +13,9 @@ async function createUser({ name, username: email, password }) {
       email_verified_at: new Date(),
     })
     .returning(['email', 'name']);
+  await knex('persona').insert({
+    email,
+  });
   return user;
 }
 

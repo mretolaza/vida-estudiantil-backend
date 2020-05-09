@@ -7,7 +7,26 @@ async function getUser(id) {
   return user;
 }
 
-async function updateUserInfo({ name, username: email, id }) {
+async function getPersona(id) {
+  const [user] = await knex('users')
+    .where('id', id)
+    .select('email');
+  const [persona] = await knex('persona')
+    .where('email', user)
+    .select('horas_beca', 'carrera', 'carne', 'genero', 'facultad');
+  return persona;
+}
+
+async function updateUserInfo({
+  name,
+  username: email,
+  id,
+  horas_beca,
+  carrera,
+  carne,
+  genero,
+  facultad,
+}) {
   const [user] = await knex('users')
     .where({ id })
     .update({
@@ -16,10 +35,21 @@ async function updateUserInfo({ name, username: email, id }) {
       updated_at: new Date(),
     })
     .returning(['email', 'name']);
+  await knex('persona')
+    .where({ email })
+    .update({
+      email,
+      horas_beca,
+      carrera,
+      carne,
+      genero,
+      facultad,
+    });
   return user;
 }
 
 module.exports = {
   getUser,
   updateUserInfo,
+  getPersona,
 };
