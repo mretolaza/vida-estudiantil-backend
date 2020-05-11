@@ -44,8 +44,8 @@ app.use(
     proxy: true,
     cookie: {
       secure: process.env.NODE_ENV === 'production',
-      expires: Date.now() + parseInt(COOKIE_EXPIRATION_MS, 10),
-      maxAge: parseInt(COOKIE_EXPIRATION_MS, 10),
+      expires: Date.now() + parseInt(COOKIE_EXPIRATION_MS, 10000),
+      maxAge: parseInt(COOKIE_EXPIRATION_MS, 10000),
     },
   })
 );

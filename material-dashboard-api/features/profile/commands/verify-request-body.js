@@ -4,12 +4,24 @@ const constants = require('../constants');
 
 const { NAME_MIN, NAME_MAX } = constants;
 
-const schema = Joi.object().keys({
+const schema = Joi.object({
   name: Joi.string()
     .min(NAME_MIN)
     .max(NAME_MAX)
     .required(),
   username: Joi.string().email({ minDomainAtoms: 2 }),
+  carne: Joi.number()
+    .integer()
+    .positive(),
+  horas_beca: Joi.number()
+    .integer()
+    .positive(),
+  carrera: Joi.string(),
+  facultad: Joi.string(),
+  genero: Joi.string()
+    .valid(['M', 'F'])
+    .uppercase()
+    .required(),
 });
 
 async function validateRegisterPayload(req, res, next) {
@@ -35,7 +47,7 @@ async function validateRegisterPayload(req, res, next) {
   }
 
   if (errors) {
-    return res.status(400).send({ success: false, messages: { errors }});
+    return res.status(400).send({ success: false, messages: { errors } });
   }
   return next();
 }
