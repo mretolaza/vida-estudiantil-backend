@@ -24,13 +24,13 @@ async function updateUser(req, res) {
 
   const databaseError = UPDATE_INFO_ERROR_MESSAGE;
 
-  res.send({
+  return res.send({
     success: false,
     messages: { errors: { databaseError } },
   });
 }
 
-async function loadPersona(req, res) {
+/* async function loadPersona(req, res) {
   let user = {};
   const {
     user: { id },
@@ -53,13 +53,10 @@ async function loadPersona(req, res) {
 
   const databaseError = UPDATE_INFO_ERROR_MESSAGE;
 
-  res.send({
+  return res.send({
     success: false,
     messages: { errors: { databaseError } },
   });
-}
+} */
 
-module.exports = {
-  updateUser,
-  loadPersona,
-};
+module.exports = updateUser;

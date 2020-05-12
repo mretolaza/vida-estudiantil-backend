@@ -24,12 +24,12 @@ const schema = Joi.object({
     .required(),
 });
 
-async function validateRegisterPayload(req, res, next) {
+async function validateUpdatePayload(req, res, next) {
   let payloadValidation;
   try {
     payloadValidation = await Joi.validate(req.body, schema, { abortEarly: false });
-  } catch (validateRegisterError) {
-    payloadValidation = validateRegisterError;
+  } catch (validateUpdateError) {
+    payloadValidation = validateUpdateError;
   }
   const { details } = payloadValidation;
   let errors;
@@ -52,4 +52,4 @@ async function validateRegisterPayload(req, res, next) {
   return next();
 }
 
-module.exports = validateRegisterPayload;
+module.exports = validateUpdatePayload;
