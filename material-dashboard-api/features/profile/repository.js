@@ -13,7 +13,7 @@ async function getPersona(id) {
     .select('email');
   const [persona] = await knex('persona')
     .where('email', user)
-    .select('horas_beca', 'carrera', 'carne', 'genero', 'facultad');
+    .select('horas_beca', 'carrera', 'carne', 'genero', 'facultad', 'email');
   return persona;
 }
 

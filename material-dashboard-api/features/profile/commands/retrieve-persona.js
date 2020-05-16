@@ -1,7 +1,5 @@
-const {getPersona } = require('../repository');
+const { getPersona } = require('../repository');
 const { UPDATE_INFO_SUCCESS_MESSAGE, UPDATE_INFO_ERROR_MESSAGE } = require('../constants');
-
-
 
 async function loadPersona(req, res) {
   let user = {};
@@ -30,6 +28,6 @@ async function loadPersona(req, res) {
     success: false,
     messages: { errors: { databaseError } },
   });
-} 
+}
 
 module.exports = loadPersona;
