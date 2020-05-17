@@ -2,12 +2,15 @@ const Joi = require('joi');
 
 const constants = require('../constants');
 
-const {PASSWORD_MAX, PASSWORD_MIN } = constants;
+const { PASSWORD_MAX, PASSWORD_MIN } = constants;
 
 const schema = Joi.object().keys({
   password: Joi.string()
     .min(PASSWORD_MIN)
     .max(PASSWORD_MAX)
+    .required(),
+  username: Joi.string()
+    .email({ minDomainAtoms: 2 })
     .required(),
 });
 
@@ -15,8 +18,8 @@ async function validateRegisterPayload(req, res, next) {
   let payloadValidation;
   try {
     payloadValidation = await Joi.validate(req.body, schema, { abortEarly: false });
-  } catch (validateRegisterError) {
-    payloadValidation = validateRegisterError;
+  } catch (validateUpdateError) {
+    payloadValidation = validateUpdateError;
   }
   const { details } = payloadValidation;
   let errors;

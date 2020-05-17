@@ -6,6 +6,7 @@ const registerRoutes = require('../features/register/routes');
 const loginRoutes = require('../features/login/routes');
 const logoutRoutes = require('../features/logout/routes');
 const profileRoutes = require('../features/profile/routes');
+const passwordRoutes = require('../features/forgot_password/routes');
 
 function isAuthenticated(req, res, next) {
   if (req.user && req.isAuthenticated()) {
@@ -27,5 +28,6 @@ router.use('/login', loginRoutes);
 router.use('/profile', isAuthenticated, profileRoutes);
 router.use('/logout', isAuthenticated, logoutRoutes);
 router.use('/register', registerRoutes);
+router.use('/password', passwordRoutes);
 
 module.exports = router;

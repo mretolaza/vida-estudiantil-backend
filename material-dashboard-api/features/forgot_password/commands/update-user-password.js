@@ -1,7 +1,7 @@
 const { updateUserPassword } = require('../repository');
 const { UPDATE_INFO_SUCCESS_MESSAGE, UPDATE_INFO_ERROR_MESSAGE } = require('../constants');
 
-async function updateUser(req, res) {
+async function updatePassword(req, res) {
   let user = {};
   const {
     user: { id },
@@ -30,4 +30,4 @@ async function updateUser(req, res) {
   });
 }
 
-module.exports = updateUser;
+module.exports = updatePassword;
